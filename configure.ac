@@ -14,6 +14,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 AM_SILENT_RULES([yes])
 AM_PROG_AR
+AM_PROG_AS
 LT_INIT
 
 PKG_PROG_PKG_CONFIG([0.24])
@@ -54,6 +55,9 @@ CHECK_LIBHY_MCU
 AC_CHECK_HEADERS([stdlib.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_SIZE_T
+AC_TYPE_UINT32_T
+AC_TYPE_UINT8_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC

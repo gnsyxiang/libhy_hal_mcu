@@ -85,6 +85,10 @@ hy_hal_mcu.pc
 *.lo
 *.la
 
-example/hy_*_demo
+hy_*_demo
+hy_*_demo.bin
+hy_*_demo.elf
+hy_*_demo.map
+
 test/hy_*_test
 
