@@ -46,6 +46,7 @@ AC_PROG_MAKE_SET
 # AC_PROG_RANLIB
 
 CHECK_LIBCUNIT
+CHECK_LIBHY_MCU
 
 # Checks for libraries.
 
