@@ -5,7 +5,7 @@
 # @file    Makefile.am
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    05/03 2021 10:35
+# @date    16/08 2023 15:42
 # @version v0.0.1
 # 
 # @since    note
@@ -13,18 +13,18 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        05/03 2021      create the file
+#     00      zhenquan.qiu        16/08 2023      create the file
 # 
-#     last modified: 05/03 2021 10:35
+#     last modified: 16/08 2023 15:42
 # ===============================================================
 
 SUBDIRS =
 
-if COMPILE_SELECT_VENDER_STM32
-SUBDIRS += stm32
+if COMPILE_SELECT_CHIP_STM32H7XX
+SUBDIRS += stm32h7xx
 endif
 
-lib_LTLIBRARIES = lib@project_name@.la
+noinst_LTLIBRARIES = libstm32.la
 
 # ------------------
 # defining variables
@@ -48,9 +48,7 @@ _define_com     +=
 
 _include_com    += -I$(top_srcdir)/include
 
-_sources_com    += \
-                   hy_calc.c    \
-                   hy_module.c
+_sources_com    +=
 
 _cppflags_com   += \
                    $(_no_error_com) \
@@ -61,22 +59,15 @@ _cflags_com     +=
 
 _cxxflags_com   +=
 
-_ldflags_com    += -version-info @current@:@revision@:@age@
-
-if !COMPILE_DEBUG_INFO
-_ldflags_com    += -export-symbols-regex 'Hy*'
-endif
-
-if COMPILE_SELECT_VENDER_STM32
-_ldadd_com      += $(top_builddir)/src/stm32/libstm32.la
+if COMPILE_SELECT_CHIP_STM32H7XX
+_ldadd_com      += $(top_builddir)/src/stm32/stm32h7xx/libstm32h7xx.la
 endif
 
 _ldadd_com      += $(ldadd_com)
 
-lib@project_name@_la_SOURCES    = $(_sources_com)
-lib@project_name@_la_CPPFLAGS   = $(_cppflags_com)
-lib@project_name@_la_CFLAGS     = $(_cflags_com)
-lib@project_name@_la_CXXFLAGS   = $(_cxxflags_com)
-lib@project_name@_la_LDFLAGS    = $(_ldflags_com)
-lib@project_name@_la_LIBADD     = $(_ldadd_com)
-
+libstm32_la_SOURCES    = $(_sources_com)
+libstm32_la_CPPFLAGS   = $(_cppflags_com)
+libstm32_la_CFLAGS     = $(_cflags_com)
+libstm32_la_CXXFLAGS   = $(_cxxflags_com)
+libstm32_la_LDFLAGS    = $(_ldflags_com)
+libstm32_la_LIBADD     = $(_ldadd_com)

@@ -78,12 +78,19 @@ AC_CONFIG_FILES([Makefile
                  build-script/stm32/stm32h7xx/Makefile
                  doc/Makefile
                  example/Makefile
+                 example/stm32/Makefile
+                 example/stm32/stm32h7xx/Makefile
+                 example/stm32/stm32h7xx/led/Makefile
                  include/Makefile
+                 include/stm32/Makefile
+                 include/stm32/stm32h7xx/Makefile
                  res/Makefile
                  res/voice/Makefile
                  res/voice/cn/Makefile
                  res/voice/en/Makefile
                  src/Makefile
+                 src/stm32/Makefile
+                 src/stm32/stm32h7xx/Makefile
                  test/Makefile])
 AC_OUTPUT
 
