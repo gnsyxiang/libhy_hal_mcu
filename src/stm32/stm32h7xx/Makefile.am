@@ -42,7 +42,8 @@ _define_com     +=
 
 _include_com    += -I$(top_srcdir)/include
 
-_sources_com    +=
+_sources_com    += \
+                   startup_stm32h743xx.s
 
 _cppflags_com   += \
                    $(_no_error_com) \
@@ -57,6 +58,7 @@ _ldadd_com      += $(ldadd_com)
 
 libstm32h7xx_la_SOURCES     = $(_sources_com)
 libstm32h7xx_la_CPPFLAGS    = $(_cppflags_com)
+libstm32h7xx_la_CCASFLAGS   = $(_cppflags_com)
 libstm32h7xx_la_CFLAGS      = $(_cflags_com)
 libstm32h7xx_la_CXXFLAGS    = $(_cxxflags_com)
 libstm32h7xx_la_LDFLAGS     = $(_ldflags_com)

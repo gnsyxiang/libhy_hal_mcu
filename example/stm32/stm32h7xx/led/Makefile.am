@@ -46,8 +46,7 @@ _sources_com    += \
                    main.c \
                    stm32h7xx_it.c \
                    system_stm32h7xx.c \
-                   stm32h7xx_hal_msp.c \
-                   startup_stm32h743xx.s
+                   stm32h7xx_hal_msp.c
 
 _cppflags_com   += \
                    $(_no_error_com) \
@@ -64,7 +63,7 @@ _ldadd_com      += \
                    $(top_builddir)/src/lib@project_name@.la \
                    $(ldadd_com)
 
-_ldflags_com    += -T$(top_srcdir)/example/stm32/stm32h7xx/led/STM32H743ZITx_FLASH.ld
+_ldflags_com    += -T$(top_srcdir)/src/stm32/stm32h7xx/STM32H743ZITx_FLASH.ld
 
 if COMPILE_LIBHY_MCU
 _include_com    += $(HY_MCU_INCS)
@@ -75,7 +74,6 @@ _elf_file                   += hy_led_demo
 bin_PROGRAMS                += hy_led_demo.elf
 hy_led_demo_elf_SOURCES     = $(_sources_com)
 hy_led_demo_elf_CPPFLAGS    = $(_cppflags_com)
-hy_led_demo_elf_CCASFLAGS   = $(_cppflags_com)
 hy_led_demo_elf_CFLAGS      = $(_cflags_com)
 hy_led_demo_elf_CXXFLAGS    = $(_cxxflags_com)
 hy_led_demo_elf_LDFLAGS     = $(_ldflags_com) -Wl,--gc-sections,-Map=hy_led_demo.map,-cref,-u,Reset_Handler
