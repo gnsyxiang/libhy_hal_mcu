@@ -100,7 +100,7 @@ printf("-------nihao \n");
   while (1)
   {
         HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_7);
-        for (size_t i = 0; i < 10000; i++) {
+        for (size_t i = 0; i < 1000; i++) {
             for (size_t i = 0; i < 1000; i++) {
             }
         }
