@@ -40,7 +40,9 @@ _no_error_com   +=
 
 _define_com     +=
 
-_include_com    += -I$(top_srcdir)/include
+_include_com    += \
+                   -I$(top_srcdir)/include/stm32 \
+                   -I$(top_srcdir)/include
 
 _sources_com    += \
                    main.c \
@@ -83,5 +85,4 @@ install-exec-hook:
 		@gcc_prefix@objcopy -O binary $$file.elf $$file.bin; \
 		@gcc_prefix@size $$file.elf; \
 	done
-
-# 	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) *.bin "$(DESTDIR)$(bindir)$$dir"
+	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) *.bin "$(DESTDIR)$(bindir)$$dir"

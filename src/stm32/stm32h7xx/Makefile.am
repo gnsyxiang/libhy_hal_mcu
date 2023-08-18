@@ -40,9 +40,12 @@ _no_error_com   +=
 
 _define_com     +=
 
-_include_com    += -I$(top_srcdir)/include
+_include_com    += \
+                   -I$(top_srcdir)/include/stm32 \
+                   -I$(top_srcdir)/include
 
 _sources_com    += \
+                   hy_hal_uart.c \
                    system_stm32h7xx.c \
                    startup_stm32h743xx.s
 
