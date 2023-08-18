@@ -45,6 +45,7 @@ _include_com    += \
                    -I$(top_srcdir)/include
 
 _sources_com    += \
+                   hy_hal_isr.c \
                    hy_hal_uart.c \
                    system_stm32h7xx.c \
                    startup_stm32h743xx.s

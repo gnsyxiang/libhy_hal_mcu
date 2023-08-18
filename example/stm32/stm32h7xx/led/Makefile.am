@@ -45,8 +45,6 @@ _include_com    += \
                    -I$(top_srcdir)/include
 
 _sources_com    += \
-                   main.c \
-                   stm32h7xx_it.c \
                    stm32h7xx_hal_msp.c
 
 _cppflags_com   += \
@@ -73,7 +71,7 @@ _ldflags_com    += -T$(top_srcdir)/src/stm32/stm32h7xx/STM32H743ZITx_FLASH.ld
 
 _elf_file                   += hy_led_demo
 bin_PROGRAMS                += hy_led_demo.elf
-hy_led_demo_elf_SOURCES     = $(_sources_com)
+hy_led_demo_elf_SOURCES     = $(_sources_com) hy_led_demo.c
 hy_led_demo_elf_CPPFLAGS    = $(_cppflags_com)
 hy_led_demo_elf_CFLAGS      = $(_cflags_com)
 hy_led_demo_elf_CXXFLAGS    = $(_cxxflags_com)
