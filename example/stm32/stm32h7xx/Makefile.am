@@ -18,9 +18,6 @@
 #     last modified: 16/08 2023 15:55
 # ===============================================================
 
-SUBDIRS = \
-          led
-
 # ------------------
 # defining variables
 # ------------------
@@ -33,6 +30,7 @@ _cflags_com     =
 _cxxflags_com   =
 _ldflags_com    =
 _ldadd_com      =
+_elf_file       =
 bin_PROGRAMS    =
 
 # ---------------------
@@ -42,7 +40,9 @@ _no_error_com   +=
 
 _define_com     +=
 
-_include_com    += -I$(top_srcdir)/include
+_include_com    += \
+                   -I$(top_srcdir)/include/stm32 \
+                   -I$(top_srcdir)/include
 
 _sources_com    +=
 
@@ -61,3 +61,25 @@ _ldadd_com      += \
                    $(top_builddir)/src/lib@project_name@.la \
                    $(ldadd_com)
 
+if COMPILE_LIBHY_MCU
+_include_com    += $(HY_MCU_INCS)
+_ldadd_com      += $(HY_MCU_LIBS)
+endif
+
+_ldflags_com    += -T$(top_srcdir)/src/stm32/stm32h7xx/STM32H743ZITx_FLASH.ld
+
+_elf_file                   += hy_led_demo
+bin_PROGRAMS                += hy_led_demo.elf
+hy_led_demo_elf_SOURCES     = $(_sources_com) hy_led_demo.c
+hy_led_demo_elf_CPPFLAGS    = $(_cppflags_com)
+hy_led_demo_elf_CFLAGS      = $(_cflags_com)
+hy_led_demo_elf_CXXFLAGS    = $(_cxxflags_com)
+hy_led_demo_elf_LDFLAGS     = $(_ldflags_com) -Wl,--gc-sections,-Map=hy_led_demo.map,-cref,-u,Reset_Handler
+hy_led_demo_elf_LDADD       = $(_ldadd_com)
+
+install-exec-hook:
+	for file in $(_elf_file); do \
+		@gcc_prefix@objcopy -O binary $$file.elf $$file.bin; \
+		@gcc_prefix@size $$file.elf; \
+	done
+	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) *.bin "$(DESTDIR)$(bindir)$$dir"

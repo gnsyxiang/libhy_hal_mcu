@@ -106,6 +106,9 @@ typedef enum {
 #define HY_HAL_UART_DEBUG_NUM HY_HAL_UART_NUM_2
 #endif
 
+// #define HY_HAL_USE_UART1
+#define HY_HAL_USE_UART2
+
 typedef void (*HyHalUartReadCb_t)(char *buf, hy_s32_t len, void *args);
 
 typedef struct {

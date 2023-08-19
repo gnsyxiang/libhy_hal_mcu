@@ -35,43 +35,70 @@
 typedef struct {
     HyHalUart_s     *uart_debug_h;
     HyHalGpio_s     *led_gpio_h;
+    HyHalGpio_s     *usart2_gpio_h;
 } _led_context_s;
 
-static void _sys_deinit(_led_context_s *context)
+static void _bool_sys_module_destroy(_led_context_s **context_pp)
 {
-    HyHalUartDestroy(&context->uart_debug_h);
+    HyModuleDestroyBool_s bool_module[] = {
+        {"sys",         HyHalSysDeInit},
+    };
 
-    HyHalSysDeInit();
+    HY_MODULE_RUN_DESTROY_BOOL(bool_module);
 }
 
-static hy_s32_t _sys_init(_led_context_s *context)
+static hy_s32_t _bool_sys_module_create(_led_context_s *context)
 {
-    do {
-        HyHalSysConfig_s sys_c;
-        HY_MEMSET(&sys_c, sizeof(sys_c));
-        if (0 != HyHalSysInit(&sys_c)) {
-            break;
-        }
+    HyHalSysConfig_s sys_c;
+    HY_MEMSET(&sys_c, sizeof(sys_c));
 
-        HyHalUartConfig_s uart_c;
-        memset(&uart_c, 0, sizeof(uart_c));
-        uart_c.save_c.num   = HY_HAL_UART_NUM_2;
-        uart_c.data_bit     = HY_HAL_UART_DATA_BIT_8;
-        uart_c.parity       = HY_HAL_UART_PARITY_NONE;
-        uart_c.stop_bit     = HY_HAL_UART_STOP_BIT_1;
-        uart_c.rate         = HY_HAL_UART_RATE_115200;
-        uart_c.flow_control = HY_HAL_UART_FLOW_CONTROL_NONE;
-        context->uart_debug_h = HyHalUartCreate(&uart_c);
-        if (!context->uart_debug_h) {
-            LOGE("HyHalUartCreate failed \n");
-            break;
-        }
+    HyModuleCreateBool_s bool_module[] = {
+        {"sys",         &sys_c,         (HyModuleCreateBoolCb_t)HyHalSysInit,           HyHalSysDeInit},
+    };
 
-        return 0;
-    } while(0);
+    HY_MODULE_RUN_CREATE_BOOL(bool_module);
+}
 
-    _sys_deinit(context);
-    return -1;
+static void _handle_sys_module_destroy(_led_context_s **context_pp)
+{
+    _led_context_s *context = *context_pp;
+
+    // note: 增加或删除要同步到HyModuleCreateHandle_s中
+    HyModuleDestroyHandle_s module[] = {
+        {"usart2",          (void **)&context->uart_debug_h,        (HyModuleDestroyHandleCb_t)HyHalUartDestroy},
+        {"usart2_gpio",     (void **)&context->usart2_gpio_h,       (HyModuleDestroyHandleCb_t)HyHalGpioDeInit},
+    };
+
+    HY_MODULE_RUN_DESTROY_HANDLE(module);
+}
+
+static hy_s32_t _handle_sys_module_create(_led_context_s *context)
+{
+    HyHalGpioConfig_s usart2_gpio_c;
+    HY_MEMSET(&usart2_gpio_c, sizeof(usart2_gpio_c));
+    usart2_gpio_c.save_c.gpio     = HY_HAL_GPIO_D;
+    usart2_gpio_c.save_c.pin      = HY_HAL_GPIO_PIN_5 | HY_HAL_GPIO_PIN_6;
+    usart2_gpio_c.mode            = HY_HAL_GPIO_MODE_AF_PP;
+    usart2_gpio_c.pull            = HY_HAL_GPIO_POLL_NOPULL;
+    usart2_gpio_c.speed           = HY_HAL_GPIO_SPEED_FREQ_LOW;
+    usart2_gpio_c.reuse_func      = HY_HAL_GPIO_REUSE_FUNC_AF7_USART2;
+
+    HyHalUartConfig_s usart2_c;
+    memset(&usart2_c, 0, sizeof(usart2_c));
+    usart2_c.save_c.num         = HY_HAL_UART_NUM_2;
+    usart2_c.data_bit           = HY_HAL_UART_DATA_BIT_8;
+    usart2_c.parity             = HY_HAL_UART_PARITY_NONE;
+    usart2_c.stop_bit           = HY_HAL_UART_STOP_BIT_1;
+    usart2_c.rate               = HY_HAL_UART_RATE_115200;
+    usart2_c.flow_control       = HY_HAL_UART_FLOW_CONTROL_NONE;
+
+    // note: 增加或删除要同步到HyModuleDestroyHandle_s中
+    HyModuleCreateHandle_s module[] = {
+        {"usart2_gpio",     (void **)&context->usart2_gpio_h,       &usart2_gpio_c,     (HyModuleCreateHandleCb_t)HyHalGpioInit,        (HyModuleDestroyHandleCb_t)HyHalGpioDeInit},
+        {"usart2",          (void **)&context->uart_debug_h,        &usart2_c,          (HyModuleCreateHandleCb_t)HyHalUartCreate,      (HyModuleDestroyHandleCb_t)HyHalUartDestroy},
+    };
+
+    HY_MODULE_RUN_CREATE_HANDLE(module);
 }
 
 static void _bool_module_destroy(_led_context_s **context_pp)
@@ -142,17 +169,14 @@ int main(void)
     do {
         context = HY_MEM_CALLOC_BREAK(_led_context_s *, sizeof(*context));
 
-        if (0 != _sys_init(context)) {
-            LOGE("sys init failed \n");
-            break;
-        }
-
         struct {
             const char *name;
             hy_s32_t (*create)(_led_context_s *context);
         } create_arr[] = {
-            {"_bool_module_create",     _bool_module_create},
-            {"_handle_module_create",   _handle_module_create},
+            {"_bool_sys_module_create",     _bool_sys_module_create},
+            {"_handle_sys_module_create",   _handle_sys_module_create},
+            {"_bool_module_create",         _bool_module_create},
+            {"_handle_module_create",       _handle_module_create},
         };
         for (size_t i = 0; i < HY_UTILS_ARRAY_CNT(create_arr); i++) {
             if (create_arr[i].create) {
@@ -178,15 +202,15 @@ int main(void)
 
     void (*destroy_arr[])(_led_context_s **context_pp) = {
         _handle_module_destroy,
-        _bool_module_destroy
+        _bool_module_destroy,
+        _handle_sys_module_destroy,
+        _bool_sys_module_destroy,
     };
     for (size_t i = 0; i < HY_UTILS_ARRAY_CNT(destroy_arr); i++) {
         if (destroy_arr[i]) {
             destroy_arr[i](&context);
         }
     }
-
-    _sys_deinit(context);
 
     HY_MEM_FREE_PP(&context);
 }

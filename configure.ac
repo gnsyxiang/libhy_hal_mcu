@@ -56,15 +56,17 @@ CHECK_LIBHY_UTILS
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdlib.h])
+AC_CHECK_HEADERS([stdlib.h string.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 AC_TYPE_UINT32_T
+AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 
 # Checks for library functions.
-AC_FUNC_MALLOC
+# AC_FUNC_MALLOC
+AC_CHECK_FUNCS([memset])
 
 AC_CONFIG_FILES([Makefile
                  $project_name.pc
@@ -89,10 +91,8 @@ AC_CONFIG_FILES([Makefile
                  example/Makefile
                  example/stm32/Makefile
                  example/stm32/stm32h7xx/Makefile
-                 example/stm32/stm32h7xx/led/Makefile
                  include/Makefile
                  include/stm32/Makefile
-                 include/stm32/stm32h7xx/Makefile
                  res/Makefile
                  res/voice/Makefile
                  res/voice/cn/Makefile

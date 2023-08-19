@@ -18,12 +18,6 @@
 #     last modified: 16/08 2023 15:38
 # ===============================================================
 
-SUBDIRS =
-
-if COMPILE_SELECT_CHIP_STM32H7XX
-SUBDIRS += stm32h7xx
-endif
-
 # ------------------
 # defining variables
 # ------------------
