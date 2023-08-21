@@ -77,6 +77,7 @@ hy_s32_t HyHalSysInit(HyHalSysConfig_s *sys_c)
         RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
         RCC_OscInitStruct.PLL.PLLFRACN = 0;
         if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+            break;
         }
 
         /** Initializes the CPU, AHB and APB buses clocks */
@@ -92,6 +93,7 @@ hy_s32_t HyHalSysInit(HyHalSysConfig_s *sys_c)
         RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
 
         if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK) {
+            break;
         }
 
         LOGI("hy sys create, handle: %p \n", handle);

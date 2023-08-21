@@ -88,7 +88,7 @@ hy_s32_t _write(hy_s32_t fd, char *ptr, hy_s32_t len)
     return i;
 }
 #endif
-#if __CC_ARM
+#ifdef __CC_ARM
 hy_s32_t fputc(hy_s32_t ch, FILE *f)
 {
     UART_HandleTypeDef *huart = NULL;
@@ -107,10 +107,11 @@ hy_s32_t fputc(hy_s32_t ch, FILE *f)
 #endif
 #endif
 
-    if ((hy_u8_t)ch == '\n') {
-        HAL_UART_Transmit(huart, '\r', 1, 1000);
+    if (ch == '\n') {
+        uint8_t cc = '\r';
+        HAL_UART_Transmit(huart, &cc, 1, 1000);
     }
-    HAL_UART_Transmit(huart, ch, 1, 1000);
+    HAL_UART_Transmit(huart, (uint8_t *)&ch, 1, 1000);
 
     return 1;
 }

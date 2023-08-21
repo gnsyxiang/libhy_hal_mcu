@@ -135,7 +135,7 @@ static void _gpio_pin_init(HyHalGpioConfig_s *gpio_c)
     };
     for (size_t i = 0; i < HY_UTILS_ARRAY_CNT(_mapping_2_gpio); i++) {
         if (gpio_c->save_c.gpio == _mapping_2_gpio[i].gpio) {
-            HAL_GPIO_WritePin(_mapping_2_gpio[i].mapping_gpio, gpio_c->save_c.pin, gpio_c->pin_val);
+            HAL_GPIO_WritePin(_mapping_2_gpio[i].mapping_gpio, gpio_c->save_c.pin, (GPIO_PinState)gpio_c->pin_val);
 
             HAL_GPIO_Init(_mapping_2_gpio[i].mapping_gpio, &GPIO_InitStruct);
             break;
