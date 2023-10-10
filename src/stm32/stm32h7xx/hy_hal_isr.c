@@ -24,7 +24,7 @@
 #include <hy_utils/hy_assert.h>
 #include <hy_utils/hy_mem.h>
 
-#include "stm32h7xx_hal.h"
+#include <hy_mcu/stm32h7xx_hal.h>
 
 #include "hy_hal_isr.h"
 
