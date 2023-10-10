@@ -48,6 +48,7 @@ _sources_com    += \
                    hy_hal_gpio.c \
                    hy_hal_isr.c \
                    hy_hal_sys.c \
+                   hy_hal_time.c \
                    hy_hal_uart.c \
                    system_stm32h7xx.c \
                    startup_stm32h743xx.s

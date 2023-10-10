@@ -28,6 +28,7 @@
 #include "hy_hal_uart.h"
 #include "hy_hal_isr.h"
 #include "hy_hal_sys.h"
+#include "hy_hal_time.h"
 #include "hy_hal_gpio.h"
 
 #include "config.h"
@@ -193,10 +194,7 @@ int main(void)
 
             LOGI("haha 你好 \n");
 
-            for (size_t i = 0; i < 10000; i++) {
-                for (size_t i = 0; i < 10000; i++) {
-                }
-            }
+            HyHalTimeDelayMs(1 * 1000);
         }
     } while(0);
 

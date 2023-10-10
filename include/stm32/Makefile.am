@@ -33,8 +33,9 @@ _no_install_headers_com +=
 
 _install_headers_com    += \
                            hy_hal_gpio.h \
-                           hy_hal_sys.h \
                            hy_hal_isr.h \
+                           hy_hal_sys.h \
+                           hy_hal_time.h \
                            hy_hal_uart.h
 
 # ------------------
