@@ -24,7 +24,7 @@
 extern "C" {
 #endif
 
-#include <hy_utils/hy_type.h>
+#include <hy_log/hy_type.h>
 
 typedef struct {
     hy_s32_t demo;
