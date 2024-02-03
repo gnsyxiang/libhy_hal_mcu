@@ -5,7 +5,7 @@
 # @file    Makefile.am
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    05/03 2021 10:35
+# @date    02/02 2024 11:21
 # @version v0.0.1
 # 
 # @since    note
@@ -13,12 +13,10 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        05/03 2021      create the file
+#     00      zhenquan.qiu        02/02 2024      create the file
 # 
-#     last modified: 05/03 2021 10:35
+#     last modified: 02/02 2024 11:21
 # ===============================================================
-
-SUBDIRS = $(vender)
 
 # ------------------
 # defining variables
@@ -26,14 +24,19 @@ SUBDIRS = $(vender)
 _no_install_headers_com =
 _install_headers_com    =
 
-install_includedir      = $(includedir)/@project_name@
+install_includedir      = $(includedir)/$(project_name)
 
 # ---------------------
 # add necessary content
 # ---------------------
 _no_install_headers_com +=
 
-_install_headers_com    +=
+_install_headers_com    += \
+                           hy_hal_gpio.h \
+                           hy_hal_isr.h \
+                           hy_hal_sys.h \
+                           hy_hal_time.h \
+                           hy_hal_uart.h
 
 # ------------------
 # make install files

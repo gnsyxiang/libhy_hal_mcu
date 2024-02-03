@@ -18,7 +18,7 @@
 #     last modified: 16/08 2023 15:45
 # ===============================================================
 
-noinst_LTLIBRARIES = libstm32h7xx.la
+noinst_LTLIBRARIES = lib@vender@_@chip@.la
 
 # ------------------
 # defining variables
@@ -41,8 +41,12 @@ _no_error_com   +=
 _define_com     +=
 
 _include_com    += \
-                   -I$(top_srcdir)/include/stm32 \
-                   -I$(top_srcdir)/include
+                   -I$(top_srcdir)/include/$(vender)/$(chip) \
+                   -I$(top_srcdir)/include/$(vender) \
+                   -I$(top_srcdir)/include \
+                   \
+                   -I$(includedir)/hy_mcu
+
 
 _sources_com    += \
                    hy_hal_gpio.c \
@@ -64,15 +68,10 @@ _cxxflags_com   +=
 
 _ldadd_com      += $(ldadd_com)
 
-if COMPILE_LIBHY_MCU
-_include_com    += $(HY_MCU_INCS)
-_ldadd_com      += $(HY_MCU_LIBS)
-endif
-
-libstm32h7xx_la_SOURCES     = $(_sources_com)
-libstm32h7xx_la_CPPFLAGS    = $(_cppflags_com)
-libstm32h7xx_la_CCASFLAGS   = $(_cppflags_com)
-libstm32h7xx_la_CFLAGS      = $(_cflags_com)
-libstm32h7xx_la_CXXFLAGS    = $(_cxxflags_com)
-libstm32h7xx_la_LDFLAGS     = $(_ldflags_com)
-libstm32h7xx_la_LIBADD      = $(_ldadd_com)
+lib@vender@_@chip@_la_SOURCES   = $(_sources_com)
+lib@vender@_@chip@_la_CPPFLAGS  = $(_cppflags_com)
+lib@vender@_@chip@_la_CCASFLAGS = $(_cppflags_com)
+lib@vender@_@chip@_la_CFLAGS    = $(_cflags_com)
+lib@vender@_@chip@_la_CXXFLAGS  = $(_cxxflags_com)
+lib@vender@_@chip@_la_LDFLAGS   = $(_ldflags_com)
+lib@vender@_@chip@_la_LIBADD    = $(_ldadd_com)

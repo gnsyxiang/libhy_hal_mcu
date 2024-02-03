@@ -26,17 +26,12 @@ GCC_PREFIX_INFO
 CHECK_PROJECT_INFO
 CHECK_VERSION_INFO
 CHECK_DOXYGEN
-# CHECK_JAVA
+CHECK_DEBUG_RELEASE
 
 SELECT_VENDER
 SELECT_CHIP
 # SELECT_PRODUCT
 SELECT_LANGUAGE
-
-AC_ARG_ENABLE([debug_info],
-              [AS_HELP_STRING([--enable-debug_info], [enable support for output debug info])],
-              [], [enable_debug_info=no])
-AM_CONDITIONAL(COMPILE_DEBUG_INFO, [test "$enable_debug_info" = "yes"])
 
 # Checks for programs.
 AC_PROG_CXX
@@ -49,9 +44,9 @@ AC_PROG_MAKE_SET
 # AC_PROG_RANLIB
 
 CHECK_LIBCUNIT
+CHECK_LIBHY_OS_TYPE
 CHECK_LIBHY_MCU
 CHECK_LIBHY_LOG
-CHECK_LIBHY_UTILS
 
 # Checks for libraries.
 
@@ -65,7 +60,7 @@ AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 
 # Checks for library functions.
-# AC_FUNC_MALLOC
+AC_FUNC_MALLOC
 AC_CHECK_FUNCS([memset])
 
 AC_CONFIG_FILES([Makefile
@@ -73,18 +68,6 @@ AC_CONFIG_FILES([Makefile
                  build-script/Makefile
                  build-script/arterytek/Makefile
                  build-script/arterytek/at32f4xx/Makefile
-                 build-script/eeasytech/Makefile
-                 build-script/eeasytech/SV823/Makefile
-                 build-script/esp32/Makefile
-                 build-script/esp32/esp32/Makefile
-                 build-script/fullhan/MC6810E/Makefile
-                 build-script/fullhan/Makefile
-                 build-script/nxp/Makefile
-                 build-script/nxp/mx6ull/Makefile
-                 build-script/pc/Makefile
-                 build-script/pc/pc-chip/Makefile
-                 build-script/rock-chips/Makefile
-                 build-script/rock-chips/rk3568/Makefile
                  build-script/stm32/Makefile
                  build-script/stm32/stm32h7xx/Makefile
                  doc/Makefile
@@ -93,6 +76,7 @@ AC_CONFIG_FILES([Makefile
                  example/stm32/stm32h7xx/Makefile
                  include/Makefile
                  include/stm32/Makefile
+                 include/stm32/stm32h7xx/Makefile
                  res/Makefile
                  res/voice/Makefile
                  res/voice/cn/Makefile

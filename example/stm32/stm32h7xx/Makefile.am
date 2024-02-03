@@ -5,7 +5,7 @@
 # @file    Makefile.am
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    16/08 2023 15:55
+# @date    02/02 2024 11:19
 # @version v0.0.1
 # 
 # @since    note
@@ -13,9 +13,9 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        16/08 2023      create the file
+#     00      zhenquan.qiu        02/02 2024      create the file
 # 
-#     last modified: 16/08 2023 15:55
+#     last modified: 02/02 2024 11:19
 # ===============================================================
 
 # ------------------
@@ -30,8 +30,8 @@ _cflags_com     =
 _cxxflags_com   =
 _ldflags_com    =
 _ldadd_com      =
-_elf_file       =
 bin_PROGRAMS    =
+_elf_file       =
 
 # ---------------------
 # add necessary content
@@ -41,14 +41,14 @@ _no_error_com   +=
 _define_com     +=
 
 _include_com    += \
-                   -I$(top_srcdir)/include/stm32 \
+                   -I$(top_srcdir)/include/$(vender)/$(chip) \
                    -I$(top_srcdir)/include
 
 _sources_com    +=
 
 _cppflags_com   += \
                    $(_no_error_com) \
-                   $(_include_com)  \
+                   $(_include_com) \
                    $(_define_com)
 
 _cflags_com     +=
@@ -58,13 +58,8 @@ _cxxflags_com   +=
 _ldflags_com    +=
 
 _ldadd_com      += \
-                   $(top_builddir)/src/lib@project_name@.la \
+                   $(top_builddir)/src/lib$(project_name).la \
                    $(ldadd_com)
-
-if COMPILE_LIBHY_MCU
-_include_com    += $(HY_MCU_INCS)
-_ldadd_com      += $(HY_MCU_LIBS)
-endif
 
 _ldflags_com    += -T$(top_srcdir)/src/stm32/stm32h7xx/STM32H743ZITx_FLASH.ld
 

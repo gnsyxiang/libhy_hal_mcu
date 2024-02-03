@@ -24,7 +24,7 @@
 extern "C" {
 #endif
 
-#include <hy_log/hy_type.h>
+#include <hy_os_type/hy_type.h>
 
 #define HY_GPIO_INDEX(_index) (hy_u16_t)(0x1U << (_index))
 

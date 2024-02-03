@@ -18,11 +18,7 @@
 #     last modified: 05/03 2021 10:35
 # ===============================================================
 
-SUBDIRS =
-
-if COMPILE_SELECT_VENDER_STM32
-SUBDIRS += stm32
-endif
+SUBDIRS = $(vender)
 
 lib_LTLIBRARIES = lib@project_name@.la
 
@@ -52,7 +48,7 @@ _sources_com    +=
 
 _cppflags_com   += \
                    $(_no_error_com) \
-                   $(_include_com)  \
+                   $(_include_com) \
                    $(_define_com)
 
 _cflags_com     +=
@@ -65,9 +61,7 @@ if !COMPILE_DEBUG_INFO
 _ldflags_com    += -export-symbols-regex 'Hy*'
 endif
 
-if COMPILE_SELECT_VENDER_STM32
-_ldadd_com      += $(top_builddir)/src/stm32/libstm32.la
-endif
+_ldadd_com      += $(top_builddir)/src/$(vender)/$(chip)/lib$(vender)_$(chip).la
 
 _ldadd_com      += $(ldadd_com)
 

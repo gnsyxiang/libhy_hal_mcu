@@ -23,8 +23,8 @@
 
 #include <hy_log/hy_log.h>
 
-#include <hy_utils/hy_assert.h>
-#include <hy_utils/hy_utils.h>
+#include <hy_os/hy_assert.h>
+#include <hy_os/hy_utils.h>
 
 #include <hy_mcu/stm32h7xx_hal_uart.h>
 

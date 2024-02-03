@@ -18,11 +18,7 @@
 #     last modified: 05/03 2021 10:38
 # ===============================================================
 
-SUBDIRS =
-
-if COMPILE_SELECT_VENDER_STM32
-SUBDIRS += stm32
-endif
+SUBDIRS = $(vender)
 
 # ------------------
 # defining variables
