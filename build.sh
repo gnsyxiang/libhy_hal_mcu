@@ -218,7 +218,7 @@ ldflag="${ldflag} -L${install_path}/lib"
 
 make distclean
 
-cd "${cur_path}" && ./autogen.sh && cd - || exit
+cd "${cur_path}" && ./autogen.sh "${cross_gcc_path}" && cd - >/dev/null 2>&1 || exit
 
 export STRIP=${cross_gcc_path}strip
 "${cur_path}"/configure                                     \
